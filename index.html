@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NaudCode — L'informatique, tout simplement.</title>
+    <style>
+        /* --- RESET & VARIABLES --- */
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f5f5f7;
+            --bg-soft: #eaf2ff;
+            --text-primary: #1d1d1f;
+            --text-secondary: #6e6e73;
+            --accent: #2086e4;
+            --accent-strong: #176fbd;
+            --accent-ink: #ffffff;
+            --border-color: #d2d2d7;
+            --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --font-ui: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #18181a;
+            --bg-secondary: #242426;
+            --bg-soft: #1d3048;
+            --text-primary: #f5f5f7;
+            --text-secondary: #b7b7bd;
+            --accent: #2086e4;
+            --accent-strong: #56a7f0;
+            --accent-ink: #101820;
+            --border-color: #454549;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: var(--font-ui);
+            -webkit-font-smoothing: antialiased;
+            line-height: 1.5;
+            overflow-x: hidden;
+            transition: background-color 0.25s ease, color 0.25s ease;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0;
+            z-index: -1;
+        }
+
+        /* --- TYPOGRAPHIE & BOUTONS --- */
+        h1, h2, h3 {
+            font-family: var(--font-family);
+            font-weight: 600;
+            letter-spacing: 0;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 980px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: transform 0.25s ease, background-color 0.25s ease, color 0.25s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: var(--accent-ink);
+            box-shadow: none;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-strong);
+            box-shadow: 0 4px 14px color-mix(in srgb, #2086E4 40%, transparent);
+            -webkit-text-stroke: 0.35px currentColor;
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: color-mix(in srgb, var(--bg-primary) 88%, transparent);
+            backdrop-filter: saturate(180%) blur(5px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1120px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 24px;
+        }
+
+        .logo {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+            margin-left: auto;
+            margin-right: 28px;
+        }
+
+        .nav-links a {
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover { color: var(--accent); }
+
+        .menu-toggle {
+            display: none;
+            width: 42px;
+            height: 42px;
+            margin-left: auto;
+            margin-right: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            background: transparent;
+            color: var(--text-primary);
+            cursor: pointer;
+            font-size: 1.25rem;
+            line-height: 1;
+        }
+
+        .theme-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-right: 16px;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 980px;
+            background: transparent;
+            color: var(--text-primary);
+            cursor: pointer;
+            font: inherit;
+            font-size: 0.85rem;
+            transition: background-color 0.25s ease, border-color 0.25s ease;
+        }
+
+        .theme-toggle:hover { background: var(--bg-secondary); }
+        .theme-icon { line-height: 1; }
+
+        .services {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 60px 24px 100px;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .section-intro {
+            grid-column: 1 / -1;
+            margin-bottom: 20px;
+        }
+
+        .section-intro h2 {
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            max-width: 650px;
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            min-height: 78vh;
+            padding: 170px 24px 100px;
+            max-width: 900px;
+            margin: 0 auto;
+            align-items: center;
+        }
+
+        .hero-copy {
+            max-width: 700px;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.8rem, 6vw, 5.2rem);
+            line-height: 1.05;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .hero h1 span {
+            color: var(--accent);
+            display: block;
+            white-space: nowrap;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+            font-weight: 400;
+            max-width: 720px;
+        }
+
+        .hero .eyebrow {
+            border-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .eyebrow {
+            color: var(--accent);
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 18px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 14px;
+        }
+
+        .card {
+            min-height: 460px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            min-height: 460px;
+            transition: transform 0.7s ease;
+            transform-style: preserve-3d;
+        }
+
+        .card.is-open .card-inner { transform: rotateY(180deg); }
+
+        .card-face {
+            position: absolute;
+            inset: 0;
+            padding: 32px;
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            background-color: var(--bg-secondary);
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-back {
+            transform: rotateY(180deg);
+            background-color: var(--bg-soft);
+        }
+
+        .card:hover .card-face { border-color: var(--accent); }
+
+        .card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .card ul { color: var(--text-secondary); margin: 20px 0 0 18px; }
+        .card li { margin-bottom: 7px; }
+
+        .service-toggle {
+            margin-top: auto;
+            padding: 14px 0 0;
+            border: 0;
+            border-top: 1px solid var(--border-color);
+            background: transparent;
+            color: var(--accent);
+            cursor: pointer;
+            font: inherit;
+            font-weight: 600;
+            text-align: left;
+        }
+
+        .service-details {
+            padding: 18px 0 6px;
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+            line-height: 1.6;
+        }
+
+        .number { color: var(--accent); font-size: 0.8rem; letter-spacing: 0.08em; }
+
+        .simple-explanation {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0 24px 80px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .explanation-item {
+            padding: 28px 0;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .explanation-item h3 { font-size: 1.15rem; margin-bottom: 8px; }
+        .explanation-item p { color: var(--text-secondary); font-size: 0.95rem; }
+
+        .pricing {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 0 24px 90px;
+        }
+
+        .pricing h2 {
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            margin-bottom: 28px;
+        }
+
+        .price-list {
+            border-top: 1px solid var(--border-color);
+        }
+
+        .price-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 24px;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .price-line p { color: var(--text-secondary); margin-top: 4px; }
+        .price { color: var(--accent); font-size: 1.25rem; font-weight: 600; white-space: nowrap; }
+
+        /* --- À PROPOS --- */
+        .about {
+            max-width: 1120px;
+            margin: 30px auto 60px;
+            padding: 60px 24px;
+            text-align: left;
+        }
+
+        .about h2 {
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            max-width: 650px;
+            margin-bottom: 24px;
+        }
+
+        .about .eyebrow {
+            color: var(--accent);
+        }
+
+        .about blockquote {
+            font: 1.5rem/1.35 var(--font-family);
+            font-style: italic;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        .about p {
+            font-size: 1.05rem;
+            color: var(--text-primary);
+        }
+
+        /* --- FOOTER / CONTACT --- */
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 80px 24px 40px;
+            text-align: center;
+            background-color: var(--bg-secondary);
+        }
+
+        footer h2 {
+            font-size: clamp(2rem, 5vw, 4rem);
+            max-width: 750px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 16px;
+        }
+
+        footer p {
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+        }
+
+        .contact-info {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-top: 40px;
+        }
+
+        .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.8s ease, transform 0.8s ease; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+            .reveal { opacity: 1; transform: none; }
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .hero {
+                min-height: calc(100svh - 76px);
+                padding: 120px 24px 72px;
+            }
+            .hero h1 { font-size: clamp(2.4rem, 9vw, 4.2rem); }
+            .hero h1 span { white-space: normal; }
+            .hero p { font-size: 1.1rem; }
+            .services, .simple-explanation { grid-template-columns: 1fr; padding-top: 40px; }
+            .card, .card-inner { min-height: 420px; }
+            .card-face { padding: 24px; }
+            .about { padding-top: 40px; }
+            .price-line { flex-direction: column; gap: 8px; }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 74px;
+                left: 16px;
+                right: 16px;
+                margin: 0;
+                padding: 8px 20px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0;
+                border: 1px solid var(--border-color);
+                border-radius: 16px;
+                background: color-mix(in srgb, var(--bg-primary) 96%, transparent);
+                box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+            }
+
+            .nav-links.is-open { display: flex; }
+            .nav-links a { width: 100%; padding: 13px 0; border-bottom: 1px solid var(--border-color); }
+            .nav-links a:last-of-type { border-bottom: 0; }
+            .nav-links .theme-toggle {
+                width: 100%;
+                justify-content: flex-start;
+                margin: 0;
+                padding: 13px 0;
+                border: 0;
+                border-top: 1px solid var(--border-color);
+                border-radius: 0;
+            }
+            .menu-toggle { display: block; }
+        }
+
+        @media (min-width: 769px) and (max-width: 1050px) {
+            .hero {
+                min-height: calc(100svh - 80px);
+                padding: 130px 32px 80px;
+            }
+            .services { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .section-intro { grid-column: 1 / -1; }
+        }
+
+        @media (min-width: 769px) {
+            .about h2 {
+                max-width: none;
+                white-space: nowrap;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-container">
+            <div class="logo">NaudCode</div>
+            <div class="nav-links" id="nav-links">
+                <a href="#services">Services</a>
+                <a href="#pricing">Tarifs</a>
+                <a href="#about">À propos</a>
+                <button class="theme-toggle" id="theme-btn" type="button" aria-label="Activer le mode sombre">
+                    <span class="theme-icon" id="theme-icon" aria-hidden="true">🌙</span>
+                    <span id="theme-text">Mode Sombre</span>
+                </button>
+            </div>
+            <button class="menu-toggle" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav-links">☰</button>
+            <a href="#contact" class="btn btn-primary">Contact</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-copy reveal">
+            <p class="eyebrow">Offrez-vous de la visibilité :</p>
+            <h1>Votre présence en ligne <span>votre meilleure carte de visite.</span></h1>
+            <p>Comme ce site, je vous crée votre page web. Simple et sans coût mensuel.</p>
+            <a href="#contact" class="btn btn-primary">Parler de mon projet</a>
+        </div>
+    </section>
+
+    <section class="services" id="services">
+        <div class="section-intro reveal">
+            <p class="eyebrow">Mes services</p>
+            <h2>Tout ce dont vous avez besoin pour commencer.</h2>
+        </div>
+        <article class="card reveal">
+            <div class="card-inner">
+                <div class="card-face card-front">
+                    <span class="number">VOTRE SITE</span>
+                    <h3>Un site qui présente votre activité</h3>
+                    <p>Une page claire avec vos services, vos coordonnées et les informations importantes pour vos clients.</p>
+                    <ul>
+                        <li>Un prix unique sans abonnement</li>
+                        <li>Un affichage adapté aux ordinateurs, tablettes et smartphones</li>
+                        <li>Vous fournissez le contenu, je m'occupe du reste</li>
+                    </ul>
+                    <button class="service-toggle" type="button" aria-expanded="false">En savoir plus +</button>
+                </div>
+                <div class="card-face card-back">
+                    <span class="number">COMMENT ÇA MARCHE ?</span>
+                    <h3>Un site statique</h3>
+                    <div class="service-details">Un site statique affiche des informations déjà préparées. Il n'a pas besoin d'une base de données ou d'un serveur complexe. C'est une solution rapide, fiable et adaptée à une entreprise qui veut simplement être trouvée en ligne.</div>
+                    <button class="service-toggle" type="button" aria-expanded="true">Retour</button>
+                </div>
+            </div>
+        </article>
+        <article class="card reveal">
+            <div class="card-inner">
+                <div class="card-face card-front">
+                    <span class="number">GOOGLE WORKSPACE</span>
+                    <h3>Des outils Google plus faciles à utiliser</h3>
+                    <p>Je vous aide à ranger vos fichiers et à mieux utiliser Gmail, Sheet, Calendar...</p>
+                    <ul>
+                        <li>Explications des possibilités</li>
+                        <li>Une organisation adaptée à votre activité</li>
+                        <li>Création de documents avec formules ou scripts</li>
+                    </ul>
+                    <button class="service-toggle" type="button" aria-expanded="false">En savoir plus +</button>
+                </div>
+                <div class="card-face card-back">
+                    <span class="number">COMMENT ÇA MARCHE ?</span>
+                    <h3>Google Workspace</h3>
+                    <div class="service-details">Google Workspace rassemble vos e-mails, documents, fichiers et rendez-vous au même endroit. Je vous aide à comprendre comment ils fonctionnent ensemble et à choisir une organisation pour améliorer votre productivité.</div>
+                    <button class="service-toggle" type="button" aria-expanded="true">Retour</button>
+                </div>
+            </div>
+        </article>
+        <article class="card reveal">
+            <div class="card-inner">
+                <div class="card-face card-front">
+                    <span class="number"> APPLE</span>
+                    <h3>L'écosystème Apple au quotidien</h3>
+                    <p>Je vous aide à mieux utiliser votre iPhone, iPad et Mac, ainsi que les applications Apple.</p>
+                    <ul>
+                        <li>Découvrez des fonctionnalités</li>
+                        <li>Améliorez votre productivité</li>
+                        <li>Conseils d'achat</li>
+                    </ul>
+                    <button class="service-toggle" type="button" aria-expanded="false">En savoir plus +</button>
+                </div>
+                <div class="card-face card-back">
+                    <span class="number">COMMENT ÇA MARCHE ?</span>
+                    <h3>L'écosystème Apple</h3>
+                    <div class="service-details">L'écosystème Apple permet à vos appareils de travailler ensemble. Je vous apprends comment utiliser les appareils et/ou applications Apple pour gagner du temps et améliorer votre productivité. Je vous conseille également sur les appareils et accessoires adaptés à votre activité.</div>
+                    <button class="service-toggle" type="button" aria-expanded="true">Retour</button>
+                </div>
+            </div>
+        </article>
+    </section>
+
+    <section class="simple-explanation">
+        <div class="explanation-item reveal">
+            <h3>Pas de facture mensuelle</h3>
+            <p>Votre site est mis en ligne sur GitHub Pages, un service qui permet de publier du code gratuitement. Il n'y a pas de serveur à louer chaque mois pour votre site.</p>
+        </div>
+        <div class="explanation-item reveal">
+            <h3>Un coût unique</h3>
+            <p>Vous payez la création de votre site une seule fois, sans abonnement. Un fonctionnement simple et transparent. (Nom de domaine à la charge du client).</p>
+        </div>
+        <div class="explanation-item reveal">
+            <h3>Un code ouvert</h3>
+            <p>Le code du site est disponible sur GitHub. Il peut être consulté, conservé et repris par un autre professionnel si nécessaire.</p>
+        </div>
+    </section>
+
+    <section class="pricing" id="pricing">
+        <div class="reveal">
+            <p class="eyebrow">Tarifs</p>
+            <h2>Des prix simples.</h2>
+        </div>
+        <div class="price-list">
+            <div class="price-line reveal">
+                <div>
+                    <h3>Une page pour présenter votre entreprise</h3>
+                    <p>La page principale avec les mentions légales.</p>
+                </div>
+                <span class="price">300 €</span>
+            </div>
+            <div class="price-line reveal">
+                <div>
+                    <h3>Une page supplémentaire</h3>
+                    <p>Par exemple : activités, contact ou présentation détaillée.</p>
+                </div>
+                <span class="price">100 €</span>
+            </div>
+            <div class="price-line reveal">
+                <div>
+                    <h3>Mettre à jour des informations</h3>
+                    <p>Modifier un texte déjà existant.</p>
+                </div>
+                <span class="price">20 €</span>
+            </div>
+            <div class="price-line reveal">
+                <div>
+                    <h3>Mettre à jour votre site</h3>
+                    <p>Ajouter de nouvelles informations.</p>
+                </div>
+                <span class="price">50 €</span>
+            </div>
+            <div class="price-line reveal">
+                <div>
+                    <h3>Mettre à jour une photo</h3>
+                    <p>Remplacer ou ajouter une photo sur votre site.</p>
+                </div>
+                <span class="price">30 €</span>
+            </div>
+                        <div class="price-line reveal">
+                <div>
+                    <h3>Conseil et accompagnement</h3>
+                    <p>Optimiser votre productivité sur Google Workspace ou Apple.</p>
+                </div>
+                <span class="price">20 - 1 000 €</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="about reveal" id="about">
+        <p class="eyebrow">À propos</p>
+        <h3>Bonjour, je m'appelle Maxime Naud.</h3>
+        <p>Technophile, j’ai grandi avec l'évolution du numérique et connu l'informatique très tôt, de MS-DOS 3 à Internet 56k, jusqu'aux technologies d'aujourd'hui.
+        Afin de faire vivre cette passion au quotidien, je mets mes compétences au service des PME et indépendants.</p>
+        <p>Mon objectif est de vous proposer des sites web statiques, simples, modernes et accessibles, parfaitement adaptés à vos besoins.</p>
+    </section>
+
+    <footer id="contact" class="reveal">
+        <h2>Vous avez une question ? Parlons-en.</h2>
+        <p>Expliquez-moi votre activité, vos problèmes avec vos mots. Je vous répondrai clairement avec une proposition adaptée.</p>
+        <p>Facturation uniquement à la livraison de votre projet</p>
+        <a href="mailto:contact@naudcode.com" class="btn btn-primary">contact@naudcode.com</a>
+        
+        <div class="contact-info">
+            <p>NaudCode | <a href="mentions-legales.html" target="_blank" rel="noopener noreferrer">Mentions Légales</a></p>
+            <p>Ce site n'utilise pas de cookies à des fins de ciblage commercial et statistiques.</p>
+            <p>© <span id="current-year"></span> NaudCode. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script>
+        const themeBtn = document.getElementById('theme-btn');
+        const themeIcon = document.getElementById('theme-icon');
+        const themeText = document.getElementById('theme-text');
+        const yearSpan = document.getElementById('current-year');
+
+        yearSpan.textContent = new Date().getFullYear();
+
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        updateToggleButton(currentTheme);
+
+        themeBtn.addEventListener('click', () => {
+            const theme = document.documentElement.getAttribute('data-theme');
+            const newTheme = theme === 'dark' ? 'light' : 'dark';
+
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateToggleButton(newTheme);
+        });
+
+        function updateToggleButton(theme) {
+            const isDark = theme === 'dark';
+            themeIcon.textContent = isDark ? '☀️' : '🌙';
+            themeText.textContent = isDark ? 'Mode Clair' : 'Mode Sombre';
+            themeBtn.setAttribute('aria-label', isDark ? 'Activer le mode clair' : 'Activer le mode sombre');
+        }
+
+        const revealItems = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.14 });
+
+        revealItems.forEach((item, index) => {
+            item.style.transitionDelay = Math.min(index * 80, 320) + 'ms';
+            revealObserver.observe(item);
+        });
+
+        document.querySelectorAll('.service-toggle').forEach((toggle) => {
+            toggle.addEventListener('click', () => {
+                const card = toggle.closest('.card');
+                const isOpen = card.classList.toggle('is-open');
+                toggle.setAttribute('aria-expanded', isOpen);
+                toggle.textContent = isOpen ? 'Réduire' : 'En savoir plus';
+            });
+        });
+
+        document.querySelectorAll('.card').forEach((card) => {
+            card.addEventListener('click', (event) => {
+                if (event.target.closest('.service-toggle')) return;
+                card.querySelector('.service-toggle').click();
+            });
+        });
+
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('#nav-links');
+
+        menuToggle.addEventListener('click', () => {
+            const isOpen = navLinks.classList.toggle('is-open');
+            menuToggle.setAttribute('aria-expanded', isOpen);
+            menuToggle.setAttribute('aria-label', isOpen ? 'Fermer le menu' : 'Ouvrir le menu');
+            menuToggle.textContent = isOpen ? '×' : '☰';
+        });
+
+        navLinks.querySelectorAll('a').forEach((link) => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('is-open');
+                menuToggle.setAttribute('aria-expanded', 'false');
+                menuToggle.setAttribute('aria-label', 'Ouvrir le menu');
+                menuToggle.textContent = '☰';
+            });
+        });
+    </script>
+
+</body>
+</html>

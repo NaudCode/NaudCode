@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mentions Légales - NaudCode</title>
+    <style>
+        /* CSS : Variables de couleurs pour thèmes Clair/Sombre */
+        :root {
+            --bg-color: #f8fafc;
+            --container-bg: #ffffff;
+            --text-color: #1e293b;
+            --text-muted: #64748b;
+            --primary-color: #0f172a;
+            --accent-color: #2086E4;
+            --border-color: #e2e8f0;
+            --shadow-color: rgba(0, 0, 0, 0.05);
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #0f172a;
+            --container-bg: #1e293b;
+            --text-color: #f8fafc;
+            --text-muted: #94a3b8;
+            --primary-color: #ffffff;
+            --accent-color: #2086E4;;
+            --border-color: #334155;
+            --shadow-color: rgba(0, 0, 0, 0.2);
+        }
+
+        /* Styles globaux */
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            background-color: var(--container-bg);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px var(--shadow-color), 0 2px 4px -1px var(--shadow-color);
+            border: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        /* En-tête */
+        header {
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin: 0;
+            color: var(--primary-color);
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-top: 5px;
+        }
+
+        /* Bouton Switch de Thème */
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--border-color);
+            padding: 8px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            color: var(--text-color);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--accent-color);
+            background-color: var(--border-color);
+        }
+
+        /* Sections */
+        section {
+            margin-bottom: 25px;
+        }
+
+        h2 {
+            font-size: 1.3rem;
+            color: var(--accent-color);
+            margin-top: 0;
+            margin-bottom: 12px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 5px;
+        }
+
+        /* Listes et Données */
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            margin-bottom: 8px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        strong {
+            color: var(--primary-color);
+            min-width: 220px;
+            display: inline-block;
+        }
+
+        a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+
+        a:hover {
+            text-decoration: underline;
+            opacity: 0.9;
+        }
+
+        footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* Version Mobile responsive */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px auto;
+            }
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            .theme-toggle {
+                align-self: flex-end;
+            }
+            strong {
+                display: block;
+                width: 100%;
+                margin-bottom: 2px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div>
+                <h1>Mentions Légales</h1>
+                <div class="subtitle">Conformément à la loi n° 2004-575 du 21 juin 2004 (LCEN)</div>
+            </div>
+            <!-- Bouton pour changer de thème -->
+            <button class="theme-toggle" id="theme-btn" aria-label="Changer de thème">
+                <span id="theme-icon">🌙</span> <span id="theme-text">Mode Sombre</span>
+            </button>
+        </header>
+
+        <main>
+            <!-- Présentation -->
+            <section>
+                <h2>🏢 1. Présentation de l'entreprise</h2>
+                <ul>
+                    <li><strong>Dénomination sociale :</strong> Maxime NAUD</li>
+                    <li><strong>Nom commercial :</strong> NaudCode</li>
+                    <li><strong>Statut juridique :</strong> Entrepreneur individuel (EI)</li>
+                    <li><strong>Activité :</strong> Création de pages web statiques et conseil en bureautique</li>
+                    <li><strong>Siège social &amp; Établissement :</strong> 20 RUE Lieutenant Demourant, 31530 Lévignac, France</li>
+                    <li><strong>SIREN :</strong> 130293566</li>
+                    <li><strong>SIRET :</strong> 13029356600019</li>
+                    <li><strong>Code APE / NAF :</strong> 62.01Z (Programmation informatique)</li>
+                    <li><strong>Date d’immatriculation au RNE :</strong> 21/09/2026</li>
+                    <li><strong>Département d’enregistrement :</strong> 31 - Haute-Garonne</li>
+                </ul>
+            </section>
+
+            <!-- Éditeur -->
+            <section>
+                <h2>👤 2. Éditeur du site et Publication</h2>
+                <ul>
+                    <li><strong>Directeur de la publication :</strong> Maxime NAUD</li>
+                    <li><strong>Contact e-mail :</strong> <a href="mailto:naudcode@contact.com">naudcode@contact.com</a></li>
+                </ul>
+            </section>
+
+            <!-- Hébergement -->
+            <section>
+                <h2>🌐 3. Hébergement du site</h2>
+                <p>Ce site internet est hébergé en tant que site statique par la plateforme de déploiement <strong>GitHub Pages</strong> :</p>
+                <ul>
+                    <li><strong>Hébergeur :</strong> GitHub, Inc.</li>
+                    <li><strong>Adresse :</strong> 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis</li>
+                    <li><strong>Site Internet :</strong> <a href="https://pages.github.com" target="_blank" rel="noopener noreferrer">https://pages.github.com</a></li>
+                </ul>
+            </section>
+
+            <!-- Propriété Intellectuelle -->
+            <section>
+                <h2>🔒 4. Propriété intellectuelle</h2>
+                <p>Tous les contenus présents sur ce site (textes, graphismes, logos, codes sources, icônes) sont la propriété exclusive de Maxime NAUD, sauf mention contraire. Toute reproduction ou distribution non autorisée de ces éléments constitue une contrefaçon sanctionnée par le Code de la propriété intellectuelle.</p>
+            </section>
+
+            <!-- Responsabilité -->
+            <section>
+                <h2>🛡️ 5. Limitation de responsabilité</h2>
+                <p>L'éditeur s'efforce d'assurer au mieux de ses possibilités l'exactitude des informations diffusées. Toutefois, l'éditeur ne saurait être tenu responsable des erreurs, omissions, ou des résultats qui pourraient être obtenus par un mauvais usage des conseils de bureautique ou d'utilisation du code.</p>
+            </section>
+
+            <!-- TVA -->
+            <section>
+                <h2>🎯 6. Régime fiscal et TVA</h2>
+                <p>TVA non applicable, article 293 B du Code Général des Impôts (CGI).</p>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; <span id="current-year"></span> NaudCode - Tous droits réservés.</p>
+            <p>Ce site n'utilise pas de cookies à des fins de ciblage commercial et statistiques.</p>
+            <p><a href="index.html">Retour à l'accueil</a></p>
+        </footer>
+    </div>
+
+    <script>
+        const themeBtn = document.getElementById('theme-btn');
+        const themeIcon = document.getElementById('theme-icon');
+        const themeText = document.getElementById('theme-text');
+        const yearSpan = document.getElementById('current-year');
+
+        // Met à jour automatiquement l'année en pied de page
+        yearSpan.textContent = new Date().getFullYear();
+
+        // Vérification de la préférence précédemment stockée
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        updateToggleButton(currentTheme);
+
+        // Gestion du clic sur le changement de thème
+        themeBtn.addEventListener('click', () => {
+            let theme = document.documentElement.getAttribute('data-theme');
+            let newTheme = (theme === 'dark') ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateToggleButton(newTheme);
+        });
+
+        // Fonction pour changer l'icône et le texte du bouton
+        function updateToggleButton(theme) {
+            if (theme === 'dark') {
+                themeIcon.textContent = '☀️';
+                themeText.textContent = 'Mode Clair';
+            } else {
+                themeIcon.textContent = '🌙';
+                themeText.textContent = 'Mode Sombre';
+            }
+        }
+    </script>
+</body>
+</html>
